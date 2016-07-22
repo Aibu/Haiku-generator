@@ -15,6 +15,8 @@ function createHaiku(structure, dictionary, adjAdv) {
             adjAdv = false;
         };
     });
+
+    // Returns the haiku
     console.log(retWords.join(' '));
 };
 
@@ -37,6 +39,7 @@ function extractRandomWord(dictionary, len, adjAdv) {
     };
     return _wordsArray[Math.floor(Math.random() * _wordsArray.length)];
 };
+
 
 module.exports = {
     createHaiku: createHaiku,

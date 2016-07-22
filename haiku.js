@@ -3,13 +3,15 @@ var hg = require('./haiku_generator');
 
 var filePath = './dictionaries/cmudict.txt';
 var customFilePath = './dictionaries/kafka-the-trial.txt';
+//var customFilePath = './dictionaries/alice-in-wonderland-lewis-carrol.txt';
+
 
 // Config
 
 // - book         = Set to true to use customFilePath
 // - adjAdv       = Forces the first word to be adjective
 //                  or adverb (doesnt really work so well!)
-// - structure    = The structure of the Haiku (array)
+// - structure    = The structure of the Haiku (array or array of arrays)
 
 var book = false;
 var adjAdv = true;
@@ -18,6 +20,8 @@ var structure = [
     [3, 1, 4],
     [3, 2]
 ];
+
+
 
 // Accept arguments from CLI
 if (process.argv.indexOf('book') !== -1) {
@@ -66,10 +70,8 @@ function formatData(data) {
 function extractData(data, dic) {
     var lines = data.toString()
         .replace(/\r?\n|\r|-/gi, ' ')
-        .replace(/\?|\!|\,|\.|:/gi, '')
-        .replace(/"/gi, '')
-        .replace(/^'/gi, '')
-        .replace(/'$/gi, '')
+        .replace(/\?|\!|\,|\.|:|"/gi, '')
+        .replace(/^'|'$/gi, '')
         .toUpperCase()
         .split(' '),
         lineSplit,
@@ -89,6 +91,7 @@ function extractData(data, dic) {
             });
         };
     });
+
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
     haikuDictionary = objDictionary;
@@ -97,6 +100,8 @@ function extractData(data, dic) {
 
 
 var dic = formatData(cmudictFile, function() {});
+
+// If it is a book, extract syllabs count
 if (book) {
     var bookDic = extractData(customdictFile, dic);
 }
@@ -105,4 +110,5 @@ hg.createHaiku(structure, haikuDictionary, adjAdv);
 
 process.stdout.write("You can also add parameters like:\n");
 process.stdout.write("- 'book' to create dramatic haikus from Kafka - The trial\n");
-process.stdout.write("- 'adjAdv' - experimental, forces the first word for each line to be an adjective or adverb\n\n\n");
+process.stdout.write("- 'adjAdv' - experimental, forces the first word for each line to be an adjective or adverb\n");
+process.stdout.write("\n\n");
