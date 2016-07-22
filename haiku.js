@@ -109,6 +109,6 @@ if (book) {
 hg.createHaiku(structure, haikuDictionary, adjAdv);
 
 process.stdout.write("You can also add parameters like:\n");
-process.stdout.write("- 'book' to create dramatic haikus from Kafka - The trial\n");
+process.stdout.write("- 'book' to create Haikus from Kafka - The trial\n");
 process.stdout.write("- 'adjAdv' - experimental, forces the first word for each line to be an adjective or adverb\n");
 process.stdout.write("\n\n");
